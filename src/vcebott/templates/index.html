@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}vcebott — choose an exam{% endblock %}
+{% block content %}
+<h1>Choose an exam session</h1>
+{% if error %}<p class="warn">{{ error }}</p>{% endif %}
+<ul class="sessions">
+  {% for s in sessions %}
+  <li>
+    <a href="/session/{{ s.year }}/{{ s.exam }}/{{ 1 if s.nht else 0 }}">
+      {{ s.year }} — Exam {{ s.exam }}{% if s.nht %} (NHT){% endif %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}vcebott — {{ year }} Exam {{ exam }}{% endblock %}
+{% block content %}
+<h1>{{ year }} — Exam {{ exam }}{% if nht %} (NHT){% endif %}</h1>
+<p class="muted">Enter the marks you received for each question, then see how you stack up against the state.</p>
+<form method="post" action="/session/{{ year }}/{{ exam }}/{{ 1 if nht else 0 }}">
+  <table>
+    <thead><tr><th>Question</th><th>Your mark</th><th>Max</th><th>State average</th></tr></thead>
+    <tbody>
+    {% for q in questions %}
+      <tr>
+        <td>Q{{ q.question }}</td>
+        <td><input type="number" name="q-{{ q.question }}" min="0" max="{{ q.marks_available }}" step="1" inputmode="numeric"></td>
+        <td class="num">{{ q.marks_available }}</td>
+        <td class="num">{{ "%.2f"|format(q.average) if q.average is not none else "—" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit">See my standing</button>
+</form>
+{% endblock %}

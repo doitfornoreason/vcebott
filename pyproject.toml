@@ -1,0 +1,35 @@
+[project]
+name = "vcebott"
+version = "0.1.0"
+description = "VCE maths analytics: exam statistics, separators, quantiles, topic classifier"
+readme = "README.md"
+authors = [
+    { name = "CachyOSMir", email = "mirazrai20@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.142.2",
+    "fastparquet>=2026.9.0",
+    "httpx>=0.28.1",
+    "jinja2>=3.1.6",
+    "numpy>=2.5.3",
+    "pandas>=3.0.6",
+    "pyarrow>=25.0.1",
+    "python-docx>=1.2.0",
+    "python-multipart>=0.0.32",
+    "typer>=0.27.2",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+vcebott = "vcebott.cli:app"
+
+[build-system]
+requires = ["uv_build>=0.12.20,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.9",
+]

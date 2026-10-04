@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}vcebott — {{ year }} Exam {{ exam }} standing{% endblock %}
+{% block content %}
+<h1>{{ year }} — Exam {{ exam }}{% if nht %} (NHT){% endif %}</h1>
+<p>
+  Your total: <strong>{{ exam_total }} / {{ exam_max }}</strong>
+  <span class="big">≈ {{ "%.0f"|format(exam_percentile) }}<sup>th</sup> percentile</span>
+  <span class="muted">vs the state (estimates assume independent questions; treat exam-level figures as approximate)</span>
+</p>
+
+<h2>Question by question</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Q</th><th>Your mark</th><th>State avg</th>
+      <th>Percentile <span class="muted">(at or below your mark)</span></th>
+      <th>Separation <span class="muted">(top 25% minus mean)</span></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for q in questions %}
+    <tr>
+      <td>Q{{ q.question }}</td>
+      <td class="num">{{ "%.0f"|format(q.your_mark) }} / {{ q.max }}</td>
+      <td class="num">{{ "%.2f"|format(q.state_avg) if q.state_avg is not none else "—" }}</td>
+      <td class="num">
+        <div class="bar"><span style="width: {{ q.percentile }}%"></span></div>
+        {{ "%.0f"|format(q.percentile) }}%
+      </td>
+      <td class="num">{{ "%.2f"|format(q.gap) }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% if weak_topics %}
+<h2>Where marks went missing, by topic</h2>
+<table>
+  <thead><tr><th>Topic</th><th>Questions</th><th>Marks lost</th><th>Marks available</th></tr></thead>
+  <tbody>
+  {% for t in weak_topics %}
+    <tr>
+      <td>{{ t.topic }}</td>
+      <td class="num">{{ t.questions }}</td>
+      <td class="num">{{ "%.0f"|format(t.lost) }}</td>
+      <td class="num">{{ t.max }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="muted">Topic labels not available yet — run <code>vcebott classify</code> for the topic breakdown.</p>
+{% endif %}
+
+<h2>Simulate a different attempt</h2>
+<p class="muted">Edit any mark below and resubmit — the standing recomputes instantly.</p>
+<form method="post" action="/session/{{ year }}/{{ exam }}/{{ 1 if nht else 0 }}">
+  <table>
+    <tbody>
+    {% for q in questions %}
+      <tr>
+        <td>Q{{ q.question }}</td>
+        <td><input type="number" name="q-{{ q.question }}" min="0" max="{{ q.max }}" step="1" value="{{ "%.0f"|format(q.your_mark) }}"></td>
+        <td class="num muted">/ {{ q.max }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit">Recompute standing</button>
+  <a href="/session/{{ year }}/{{ exam }}/{{ 1 if nht else 0 }}">Reset to blank</a>
+</form>
+{% endblock %}

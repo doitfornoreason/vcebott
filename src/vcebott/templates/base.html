@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}vcebott{% endblock %}</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, sans-serif; max-width: 60rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    h1, h2 { font-weight: 650; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    th, td { border-bottom: 1px solid color-mix(in oklab, currentColor 20%, transparent); padding: 0.4rem 0.6rem; text-align: left; }
+    th { font-weight: 600; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .bar { background: currentColor; opacity: 0.25; height: 0.8rem; border-radius: 0.2rem; position: relative; }
+    .bar span { position: absolute; inset: 0; background: currentColor; opacity: 0.85; border-radius: 0.2rem; }
+    nav { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+    .pill { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; border: 1px solid color-mix(in oklab, currentColor 30%, transparent); font-size: 0.85em; }
+    .big { font-size: 2rem; font-weight: 700; }
+    .muted { opacity: 0.65; }
+    .warn { color: #b45309; }
+    form { margin: 1rem 0; }
+    input[type="number"] { width: 4.5rem; padding: 0.3rem; }
+    button { padding: 0.5rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    ul.sessions { list-style: none; padding: 0; display: grid; gap: 0.4rem; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">Enter marks</a>
+    <a href="/separators">Separator rankings</a>
+  </nav>
+  {% block content %}{% endblock %}
+</body>
+</html>
