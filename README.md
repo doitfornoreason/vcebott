@@ -1,10 +1,12 @@
 # vcebott
 
+# ! Work in progress
+
 VCE maths analytics built from VCAA examination statistics: question difficulty
 ("separators"), state-wide quantiles for your marks, per-question topic
 classification, and a local dashboard for students.
 
-## What it does
+## Plan
 
 - **Scrape** — downloads every published exam paper and external assessment
   report for a subject (VCAA 2006-2026, NHT sessions included) into `data/raw/`,
